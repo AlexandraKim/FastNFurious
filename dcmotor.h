@@ -6,6 +6,8 @@
 #define IN2_PIN		4
 #define IN3_PIN		5
 #define IN4_PIN		6
+#define ENA_PIN		23
+#define ENB_PIN		26
 
 #define MAX_SPEED 50
 #define MIN_SPEED 0

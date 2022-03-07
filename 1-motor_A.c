@@ -7,9 +7,11 @@
 #include <wiringPi.h>
 
 #define IN1_PIN		1
-#define IN4_PIN		4
-#define IN5_PIN		5
-#define IN6_PIN		6
+#define IN2_PIN		4
+#define IN3_PIN		5
+#define IN4_PIN		6
+#define ENA_PIN		23
+#define ENB_PIN		26
 
 
 void initDCMotor();
@@ -38,20 +40,20 @@ int main(void)
 		   stopDCMotor();
 	       delay(500);
 		 
-	    	goBackward();
-	        delay(500);
+	  //   	goBackward();
+	  //       delay(500);
 			
-			stopDCMotor();
-			delay(500);
+			// stopDCMotor();
+			// delay(500);
 
-			goRight();
-			delay(500);
+			// goRight();
+			// delay(500);
 
-	        goLeft();
-	        delay(500);
+	  //       goLeft();
+	  //       delay(500);
 	        
-	        stopDCMotor();
-	        delay(1000);
+	  //       stopDCMotor();
+	  //       delay(1000);
 	        
 	        cntr--;
 		    break;
@@ -67,6 +69,8 @@ void initDCMotor()
 	pinMode(IN4_PIN, OUTPUT);
 	pinMode(IN5_PIN, OUTPUT);
 	pinMode(IN6_PIN, OUTPUT);
+	pinMode(ENA_PIN, OUTPUT);
+	pinMode(ENB_PIN, OUTPUT);
 	digitalWrite(IN1_PIN, HIGH);
 	digitalWrite(IN4_PIN, HIGH);
 	digitalWrite(IN5_PIN, HIGH);
@@ -78,8 +82,11 @@ void goForward()
 {
 		digitalWrite(IN1_PIN, HIGH);
 		digitalWrite(IN4_PIN, LOW);
+		analogWrite(ENA_PIN, 150);
+
 		digitalWrite(IN5_PIN, HIGH);
 		digitalWrite(IN6_PIN, LOW);		
+		analogWrite(ENB_PIN, 150);
 		printf("Forward\n");
 }	
 
