@@ -45,23 +45,23 @@ int main(void) {
 
        slow(1500);
 	
-	//~ dist = getDistance();
+	dist = getDistance();
 	
 
-        //~ if(dist <= 15){
-            //~ stopDCMotor(100);
-            //~ printf("STOP: distance is less than 15cm\n");
-            //~ delay(1000);
+        if(dist <= 15){
+            stopDCMotor(100);
+            printf("STOP: distance is less than 15cm\n");
+            delay(1000);
 	    
 
-        //~ } else{
-		//~ lineTracerDetect();
+        } else{
+		lineTracerDetect();
 		
-		//~ if(test1==true){
+		if(test1==true){
 			
 			break;
-			//~ }
-		//~ }
+			}
+		}
 	
 		
 	}
@@ -78,45 +78,45 @@ void initLineTacer() {
 
 void lineTracerDetect(){
 	
- leftTracer = digitalRead(LEFT_TRACER_PIN);
- rightTracer = digitalRead(RIGHT_TRACER_PIN);
+	 leftTracer = digitalRead(LEFT_TRACER_PIN);
+	 rightTracer = digitalRead(RIGHT_TRACER_PIN);
 	
 	
 	if (leftTracer == 0 && rightTracer == 1) {
-		while(leftTracer == 0 && rightTracer == 1){
-			printf("Right\n");
-			smoothRight(300);
-			leftTracer = digitalRead(LEFT_TRACER_PIN);
-			rightTracer = digitalRead(RIGHT_TRACER_PIN);
-		}
+		//~ while(leftTracer == 0 && rightTracer == 1){
+		printf("Right\n");
+		smoothRight(300);
+		//~ leftTracer = digitalRead(LEFT_TRACER_PIN);
+		//~ rightTracer = digitalRead(RIGHT_TRACER_PIN);
+		//~ }
             
 
 
         }
         else if (rightTracer == 0 && leftTracer == 1) {
-		while(rightTracer == 0 && leftTracer == 1){
+		//~ while(rightTracer == 0 && leftTracer == 1){
 			printf("Left\n");
 			smoothLeft(300);
-			leftTracer = digitalRead(LEFT_TRACER_PIN);
-			rightTracer = digitalRead(RIGHT_TRACER_PIN);
-		}
+			//~ leftTracer = digitalRead(LEFT_TRACER_PIN);
+			//~ rightTracer = digitalRead(RIGHT_TRACER_PIN);
+		//~ }
             
 
 
         }
         else if (rightTracer == 0 && leftTracer == 0) {
-            printf("Stop\n");
-			stopDCMotor(100);
-			delay(1000);
-			test1 = true;
+		printf("Stop\n");
+		stopDCMotor(100);
+		delay(1000);
+		test1 = true;
 			
 
         }
         else if (rightTracer == 1 && leftTracer == 1) {
             printf("Forward\n");
-			slow(25);
-					leftTracer = digitalRead(LEFT_TRACER_PIN);
-		rightTracer = digitalRead(RIGHT_TRACER_PIN);
+		slow(25);
+					//~ leftTracer = digitalRead(LEFT_TRACER_PIN);
+		//~ rightTracer = digitalRead(RIGHT_TRACER_PIN);
 
         }
 	
