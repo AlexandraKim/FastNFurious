@@ -3,12 +3,11 @@
 #include <stdbool.h>
 #include <softPwm.h>
 
+#include "config.h"
 #include "dcmotor.h"
 #include "ultrasonic.h"
-#include "irsensor.h"
-
-#define LEFT_TRACER_PIN 10
-#define RIGHT_TRACER_PIN 11
+#include "irSensor.h"
+#include "lineTracer.h"
 
 //~ low battery
 //~ int turn = 350;
@@ -18,15 +17,12 @@
 int turn = 500;
 int slowDelay = 5;
 
-void initLineTacer();
 void lineTracerDetect();
 
 void avoidObstacle();
 void park();
 
 int dist;
-int leftTracer;
-int rightTracer;
 int LValue, RValue; 
 bool quit;
 int obstaclesCount = 0;
@@ -37,9 +33,10 @@ int main(void) {
         return 0;
     }
     initIR();
-    initLineTacer();
     initUltrasonic();
     initSoftDCMotor();
+
+    LineTracerThread();
     quit = false;
     
     while (1) {
