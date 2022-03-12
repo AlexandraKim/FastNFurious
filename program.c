@@ -3,11 +3,8 @@
 #include <stdbool.h>
 #include <softPwm.h>
 
-#include "config.h"
-#include "dcmotor.h"
-#include "ultrasonic.h"
-#include "irSensor.h"
-#include "lineTracer.h"
+#include "services/initServices.h"
+
 
 //~ low battery
 //~ int turn = 350;
@@ -18,12 +15,9 @@ int turn = 500;
 int slowDelay = 5;
 
 void lineTracerDetect();
-
 void avoidObstacle();
 void park();
 
-int dist;
-int LValue, RValue; 
 bool quit;
 int obstaclesCount = 0;
 
@@ -32,39 +26,30 @@ int main(void) {
     if (wiringPiSetup() == -1) {
         return 0;
     }
-    initIR();
-    initUltrasonic();
-    initSoftDCMotor();
 
-    LineTracerThread();
+    InitServices();
+    
     quit = false;
     
     while (1) {
-        dist = getDistance();
-        
-        //~ slow(2000);
-        //~ stopDCMotor(10);
-        //~ smoothLeft(turn);
-        //~ stopDCMotor(10);
-        //~ slow(300);
-        //~ stopDCMotor(10);
-        //~ smoothRight(turn);
-        //~ break;
-
-        if(dist <= 15) {
+       
+        if(distance <= 15) {
             if(obstaclesCount == 0){
-                while (dist <= 15) {
+                while (distance <= 15) {
                 
                 stopDCMotor(1);
                 printf("STOP: distance is less than 15cm\n");
-                //~ delay(1000);
+                //~ delay(10);
                 }
+                obstaclesCount++;
+                lineTracerDetect();
             }
             
             
-            obstaclesCount++;
+            
             if(obstaclesCount == 2){
                 avoidObstacle();
+                obstaclesCount++;
             } else if (obstaclesCount == 3){
                 park();
             } else if(obstaclesCount == 4) {
@@ -84,22 +69,12 @@ int main(void) {
 }
 
 void avoidObstacle(){
-    LValue = digitalRead(LEFT_IR_PIN);
-    RValue = digitalRead(RIGHT_IR_PIN);
     while (LValue == 0) {
         printf("Left Obstacle\n");
         smoothRight(13);
-        LValue = digitalRead(LEFT_IR_PIN);
-        RValue = digitalRead(RIGHT_IR_PIN);
     }
-    
-    leftTracer = digitalRead(LEFT_TRACER_PIN);
-    rightTracer = digitalRead(RIGHT_TRACER_PIN);
     while(rightTracer == 1){
         slow(10);
-        
-        leftTracer = digitalRead(LEFT_TRACER_PIN);
-        rightTracer = digitalRead(RIGHT_TRACER_PIN);
     }
     
     stopDCMotor(100);
@@ -142,21 +117,14 @@ void avoidObstacle(){
 void park(){
     goLeft(500);
     quit = true;
-    dist = getDistance();
+    
     //~ while(dist > 15){
         //~ slow(slowDelay);
     //~ }
     stopDCMotor(100);
 }
 
-void initLineTacer() {
-    pinMode(LEFT_TRACER_PIN, INPUT);
-    pinMode(RIGHT_TRACER_PIN, INPUT);
-}
-
 void lineTracerDetect(){
-    leftTracer = digitalRead(LEFT_TRACER_PIN);
-    rightTracer = digitalRead(RIGHT_TRACER_PIN);
     
     if (leftTracer == 0 && rightTracer == 1) {
         printf("Turn right\n");
@@ -182,5 +150,5 @@ void lineTracerDetect(){
     }
 }
 
-//gcc test.c -o test -lwiringPi
+//gcc program.c -o program -lwiringPi
 // ./lineb

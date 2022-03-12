@@ -1,2 +1,0 @@
-int leftTracer;
-int rightTracer;
