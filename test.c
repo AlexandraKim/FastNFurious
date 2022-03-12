@@ -15,8 +15,8 @@
 //~ int slowDelay = 25;
 
 //~ full battery
-int turn = 350;
-int slowDelay = 10;
+int turn = 500;
+int slowDelay = 5;
 
 void initLineTacer();
 void lineTracerDetect();
@@ -44,17 +44,33 @@ int main(void) {
     
     while (1) {
         dist = getDistance();
+        
+        //~ slow(2000);
+        //~ stopDCMotor(10);
+        //~ smoothLeft(turn);
+        //~ stopDCMotor(10);
+        //~ slow(300);
+        //~ stopDCMotor(10);
+        //~ smoothRight(turn);
+        //~ break;
 
         if(dist <= 15) {
-            stopDCMotor(100);
-            printf("STOP: distance is less than 15cm\n");
-            delay(1000);
+            if(obstaclesCount == 0){
+                while (dist <= 15) {
+                
+                stopDCMotor(1);
+                printf("STOP: distance is less than 15cm\n");
+                //~ delay(1000);
+                }
+            }
+            
+            
             obstaclesCount++;
-            if(obstaclesCount == 1){
+            if(obstaclesCount == 2){
                 avoidObstacle();
-            } else if (obstaclesCount == 2){
+            } else if (obstaclesCount == 3){
                 park();
-            } else if(obstaclesCount == 3) {
+            } else if(obstaclesCount == 4) {
                 quit = true;    
             }
         } else{
@@ -130,9 +146,9 @@ void park(){
     goLeft(500);
     quit = true;
     dist = getDistance();
-    while(dist > 15){
-        slow(slowDelay);
-    }
+    //~ while(dist > 15){
+        //~ slow(slowDelay);
+    //~ }
     stopDCMotor(100);
 }
 
@@ -150,13 +166,13 @@ void lineTracerDetect(){
         
         stopDCMotor(100); 
         smoothRight(turn);
-        stopDCMotor(100);
+        //~ stopDCMotor(100);
     } else if (rightTracer == 0 && leftTracer == 1) {
         printf("Turn left\n");
 
         stopDCMotor(100);
         smoothLeft(turn);
-        stopDCMotor(100); 
+        //~ stopDCMotor(100); 
     } else if (rightTracer == 0 && leftTracer == 0) {
         printf("Stop\n");
         stopDCMotor(100);
@@ -169,5 +185,5 @@ void lineTracerDetect(){
     }
 }
 
-//gcc 10-line_tracer_B.c -o lineb -lwiringPi
+//gcc test.c -o test -lwiringPi
 // ./lineb

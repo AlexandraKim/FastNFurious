@@ -44,7 +44,7 @@ void initSoftDCMotor()
 }
 
 void slow(int ms){
-  	softPwmWrite(IN1_PIN, SLOW_SPEED);
+  	softPwmWrite(IN1_PIN, SLOW_SPEED+6);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, SLOW_SPEED);
 	softPwmWrite(IN4_PIN, MIN_SPEED);
@@ -90,6 +90,7 @@ void goLeft(int ms)
 
 void smoothRight(int ms)
 {
+	//~ +6
 	softPwmWrite(IN1_PIN, MAX_SPEED);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, MAX_SPEED/SPEED_COEFFICIENT);
