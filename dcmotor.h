@@ -14,9 +14,9 @@
 #define SPEED_COEFFICIENT 8
 
 //~ low battery
-//~ #define SLOW_SPEED 25
-//~ full battery
 #define SLOW_SPEED 30
+//~ full battery
+//~ #define SLOW_SPEED 25
 
 
 void initSoftDCMotor();

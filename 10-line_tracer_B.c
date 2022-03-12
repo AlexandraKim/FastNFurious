@@ -22,24 +22,25 @@
 #define TRIG_PIN		28
 #define ECHO_PIN		29
 //~ low battery
-int turn = 350;
-int slowDelay = 25;
+//~ int turn = 350;
+//~ int slowDelay = 25;
 
 //~ full battery
-//~ int turn = 300;
-//~ int slowDelay = 10;
+int turn = 350;
+int slowDelay = 10;
 
 void initLineTacer();
 
 void lineTracerDetect();
 void avoidObstacle();
+void park();
 
 int dist;
 int leftTracer;
 int rightTracer;
 int LValue, RValue; 
 bool test1;
-int obstaclesCount;
+int obstaclesCount = 0;
 
 int main(void) {
 
@@ -69,9 +70,13 @@ int main(void) {
             printf("STOP: distance is less than 15cm\n");
             delay(1000);
 	    obstaclesCount++;
-		//~ if(obstaclesCount == 2){
-			avoidObstacle();
-		//~ }
+            if(obstaclesCount == 1){
+		avoidObstacle();
+	    } else if (obstaclesCount == 2){
+		    park();
+	    } else if(obstaclesCount == 3) {
+		test1 = true;    
+		}
 	    //~ stopDCMotor(100);
 	    //~ break;
 	    
@@ -98,16 +103,8 @@ void avoidObstacle(){
 
 		
 		
-	    printf("Left\n");
-	    smoothRight(10);
-
-		//~ }
-		//~ else if(LValue == 0 && RValue == 0){
-		    //~ printf("Both\n");
-
-		//~ }else if(LValue == 1 && RValue == 1){
-		    //~ printf("No\n");
-		//~ }
+	    printf("Left Obstacle\n");
+	    smoothRight(13);
 		LValue = digitalRead(LEFT_IR_PIN);
 		RValue = digitalRead(RIGHT_IR_PIN);
 	}
@@ -115,17 +112,19 @@ void avoidObstacle(){
 	leftTracer = digitalRead(LEFT_TRACER_PIN);
 	rightTracer = digitalRead(RIGHT_TRACER_PIN);
 	while(rightTracer == 1){
-		slow(20);
+		slow(10);
 		
-	leftTracer = digitalRead(LEFT_TRACER_PIN);
-	rightTracer = digitalRead(RIGHT_TRACER_PIN);
-		}
+		leftTracer = digitalRead(LEFT_TRACER_PIN);
+		rightTracer = digitalRead(RIGHT_TRACER_PIN);
+	}
 	
 	stopDCMotor(100);
-	smoothLeft(1000);
-	slow(600);
+	smoothLeft(1500);
+	slow(900);
 	smoothLeft(300);
 	stopDCMotor(100);
+	smoothRight(800);
+	slow(600);
 	//~ test1 = true;
 	
 	//~ low battery
@@ -155,6 +154,18 @@ void avoidObstacle(){
 	//~ smoothRight(1600);
 	
 }
+
+void park(){
+	goLeft(500);
+	test1 = true;
+	dist = getDistance();
+	while(dist > 15){
+		slow(slowDelay);
+	}
+	//~ break;
+	stopDCMotor(100);
+	
+}
 void initLineTacer() {
     pinMode(LEFT_TRACER_PIN, INPUT);
     pinMode(RIGHT_TRACER_PIN, INPUT);
@@ -169,7 +180,7 @@ void lineTracerDetect(int dist){
 	
 	
 	if (leftTracer == 0 && rightTracer == 1) {
-		printf("Right\n");
+		printf("Turn right\n");
 		
 		stopDCMotor(100); 
 		smoothRight(turn);
@@ -179,7 +190,7 @@ void lineTracerDetect(int dist){
 
         }
         else if (rightTracer == 0 && leftTracer == 1) {
-		printf("Left\n");
+		printf("Turn left\n");
 		stopDCMotor(100);
 		smoothLeft(turn);
 		stopDCMotor(100); 
@@ -197,7 +208,7 @@ void lineTracerDetect(int dist){
 
         }
         else if (rightTracer == 1 && leftTracer == 1) {
-            printf("Forward\n");
+            //~ printf("Forward\n");
 		slow(slowDelay);
 		
 
