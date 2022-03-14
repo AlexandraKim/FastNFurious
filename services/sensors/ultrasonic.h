@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <wiringPi.h>
-
 #define TRIG_PIN		28
 #define ECHO_PIN		29
 
@@ -25,17 +22,15 @@ PI_THREAD(ultrasonicThread) {
         delayMicroseconds(10) ;
         digitalWrite(TRIG_PIN, LOW) ;
         
-        int 	start_time=0;
-        int end_time=0;
+        int start_time = 0;
+        int end_time = 0;
         while (digitalRead(ECHO_PIN) == 0) {
-            start_time = micros() ;
-            }
-        
+            start_time = micros();
+        }
         
         while (digitalRead(ECHO_PIN) == 1) {
-            end_time = micros() ;
-            }
-        
+            end_time = micros();
+        }
         
         distance = (int)((end_time - start_time) / 29. / 2.) ;
     }
@@ -49,10 +44,9 @@ void UltrasonicThread() {
 }
 
 void UltrasonicTest(){
-        while(1)
-	{
-		     printf("Distance %dcm\n", distance);
-	         delay(100);	
+    while(1) {
+         printf("Distance %dcm\n", distance);
+         delay(100);	
 	}
 }
 

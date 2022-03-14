@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <wiringPi.h>
-#include <softPwm.h>
-
 #define IN1_PIN		1
 #define IN2_PIN		4
 #define IN3_PIN		5
@@ -9,7 +5,7 @@
 #define ENA_PIN		23
 #define ENB_PIN		26
 
-#define MAX_SPEED 50
+#define MAX_SPEED 40
 #define MIN_SPEED 0
 #define SPEED_COEFFICIENT 8
 

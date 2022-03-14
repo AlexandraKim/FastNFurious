@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <wiringPi.h>
-
 #define LEFT_IR_PIN 27
 #define RIGHT_IR_PIN 16
 

@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <wiringPi.h>
-#include <stdbool.h>
-
 #define LEFT_TRACER_PIN 10
 #define RIGHT_TRACER_PIN 11
 
