@@ -1,5 +1,5 @@
-int leftTracer;
-int rightTracer;
+int LeftTracer;
+int RightTracer;
 int LValue;
 int RValue; 
-int distance;
+int Distance;

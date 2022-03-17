@@ -8,12 +8,9 @@
 #define MAX_SPEED 40
 #define MIN_SPEED 0
 #define SPEED_COEFFICIENT 8
+#define MOTOR_DIFFERENCE 6
 
-//~ low battery
 #define SLOW_SPEED 30
-//~ full battery
-//~ #define SLOW_SPEED 25
-
 
 void initSoftDCMotor();
 void goForward(int ms);
@@ -26,8 +23,7 @@ void stopDCMotor(int ms);
 void slow(int ms);
 void smoothBackLeft(int ms);
 
-void initSoftDCMotor()
-{
+void initSoftDCMotor() {
 	pinMode(IN1_PIN,SOFT_PWM_OUTPUT);
 	pinMode(IN2_PIN,SOFT_PWM_OUTPUT);
 	pinMode(IN3_PIN,SOFT_PWM_OUTPUT);
@@ -39,16 +35,15 @@ void initSoftDCMotor()
 	softPwmCreate(IN4_PIN, MIN_SPEED, MAX_SPEED);
 }
 
-void slow(int ms){
-  	softPwmWrite(IN1_PIN, SLOW_SPEED+6);
+void slow(int ms) {
+  	softPwmWrite(IN1_PIN, SLOW_SPEED + MOTOR_DIFFERENCE);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, SLOW_SPEED);
 	softPwmWrite(IN4_PIN, MIN_SPEED);
 	delay(ms);
 }
 
-void goForward(int ms)
-{	
+void goForward(int ms) {	
 	softPwmWrite(IN1_PIN, MAX_SPEED);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, MAX_SPEED);
@@ -56,8 +51,7 @@ void goForward(int ms)
 	delay(ms);
 }
 
-void goBackward(int ms)	
-{
+void goBackward(int ms)	{
 	softPwmWrite(IN1_PIN, MIN_SPEED);
 	softPwmWrite(IN2_PIN, MAX_SPEED);
 	softPwmWrite(IN3_PIN, MIN_SPEED);
@@ -66,8 +60,7 @@ void goBackward(int ms)
 }
 	
 	
-void smoothLeft(int ms)
-{
+void smoothLeft(int ms) {
 	softPwmWrite(IN1_PIN, MAX_SPEED/SPEED_COEFFICIENT);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, MAX_SPEED);
@@ -75,8 +68,7 @@ void smoothLeft(int ms)
 	delay(ms);
 }
 	
-void goLeft(int ms)
-{
+void goLeft(int ms) {
 	softPwmWrite(IN1_PIN, MIN_SPEED);
 	softPwmWrite(IN2_PIN, MAX_SPEED);
 	softPwmWrite(IN3_PIN, MAX_SPEED);
@@ -84,9 +76,7 @@ void goLeft(int ms)
 	delay(ms);
 }
 
-void smoothRight(int ms)
-{
-	//~ +6
+void smoothRight(int ms) {
 	softPwmWrite(IN1_PIN, MAX_SPEED);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, MAX_SPEED/SPEED_COEFFICIENT);
@@ -94,8 +84,7 @@ void smoothRight(int ms)
 	delay(ms);
 }
 
-void goRight(int ms)
-{
+void goRight(int ms) {
 	softPwmWrite(IN1_PIN, MAX_SPEED);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, MIN_SPEED);
@@ -103,7 +92,7 @@ void goRight(int ms)
 	delay(ms);
 }
 
-void smoothBackLeft(int ms){
+void smoothBackLeft(int ms) {
 	softPwmWrite(IN1_PIN, MIN_SPEED);
 	softPwmWrite(IN2_PIN, MAX_SPEED/SPEED_COEFFICIENT); 
 	softPwmWrite(IN3_PIN, MIN_SPEED);
@@ -111,7 +100,7 @@ void smoothBackLeft(int ms){
 	delay(ms);
 }
 
-void smoothBackRight(int ms){
+void smoothBackRight(int ms) {
 	softPwmWrite(IN1_PIN, MIN_SPEED);
 	softPwmWrite(IN2_PIN, MAX_SPEED); 
 	softPwmWrite(IN3_PIN, MIN_SPEED);
@@ -119,8 +108,7 @@ void smoothBackRight(int ms){
 	delay(ms);
 }
 
-void stopDCMotor(int ms)
-{
+void stopDCMotor(int ms) {
 	softPwmWrite(IN1_PIN, MIN_SPEED);
 	softPwmWrite(IN2_PIN, MIN_SPEED);
 	softPwmWrite(IN3_PIN, MIN_SPEED);

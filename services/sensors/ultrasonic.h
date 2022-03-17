@@ -8,19 +8,17 @@ void UltrasonicTest();
 void InitUltrasonic(){
     pinMode(TRIG_PIN, OUTPUT);
     pinMode(ECHO_PIN, INPUT);
-
 }
-
 
 PI_THREAD(ultrasonicThread) {
 	InitUltrasonic();
     while(1) {
-        digitalWrite(TRIG_PIN, LOW) ;
+        digitalWrite(TRIG_PIN, LOW);
         delay(500) ;
-        digitalWrite(TRIG_PIN, HIGH) ;
+        digitalWrite(TRIG_PIN, HIGH);
         
         delayMicroseconds(10) ;
-        digitalWrite(TRIG_PIN, LOW) ;
+        digitalWrite(TRIG_PIN, LOW);
         
         int start_time = 0;
         int end_time = 0;
@@ -32,9 +30,8 @@ PI_THREAD(ultrasonicThread) {
             end_time = micros();
         }
         
-        distance = (int)((end_time - start_time) / 29. / 2.) ;
+        Distance = (int)((end_time - start_time) / 29. / 2.) ;
     }
-    
 }
 
 void UltrasonicThread() {
@@ -45,8 +42,8 @@ void UltrasonicThread() {
 
 void UltrasonicTest(){
     while(1) {
-         printf("Distance %dcm\n", distance);
-         delay(100);	
+        printf("Distance %dcm\n", Distance);
+        delay(100);	
 	}
 }
 

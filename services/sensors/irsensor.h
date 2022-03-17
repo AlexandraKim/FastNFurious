@@ -4,8 +4,7 @@
 void InitIR();
 void IrThread();
 
-void InitIR()
-{
+void InitIR() {
     pinMode(LEFT_IR_PIN, INPUT);
     pinMode(RIGHT_IR_PIN, INPUT);
 		
@@ -20,31 +19,23 @@ PI_THREAD(irThread) {
     
 }
 
-
-
 void IrThread() {
     if(piThreadCreate(irThread) != 0) {
         printf("IR sensor not initialized\n");
     }
 }
 
-
-void IrTest(){
+void IrTest() {
     while(1){
-	
-
-     if(LValue == 1 && RValue == 0 ) {
-	printf("Right\n");
-       
-    }else if (LValue == 0 && RValue == 1) { 
-	printf("Left\n");
-
-    }else if(LValue == 0 && RValue == 0){
-	printf("Both\n");
-
-    }else if(LValue == 1 && RValue == 1){
-	printf("No\n");
+        if(LValue == 1 && RValue == 0 ) {
+    	   printf("Right\n");
+        } else if (LValue == 0 && RValue == 1) { 
+    	   printf("Left\n");
+        } else if(LValue == 0 && RValue == 0) {
+    	   printf("Both\n");
+        } else if(LValue == 1 && RValue == 1) {
+    	   printf("No\n");
+        }
     }
-}
 }
 

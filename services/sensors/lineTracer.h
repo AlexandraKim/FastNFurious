@@ -13,8 +13,8 @@ void InitLineTacer() {
 PI_THREAD(lineTracerThread) {
 	InitLineTacer();
     while(1) {
-        leftTracer = digitalRead(LEFT_TRACER_PIN);
-        rightTracer = digitalRead(RIGHT_TRACER_PIN);
+        LeftTracer = digitalRead(LEFT_TRACER_PIN);
+        RightTracer = digitalRead(RIGHT_TRACER_PIN);
     }
     
 }
@@ -25,25 +25,16 @@ void LineTracerThread() {
     }
 }
 
-void LineTracerTest(){
-      while (1) {
-       
-         if (leftTracer == 0 && rightTracer == 1) {
+void LineTracerTest() {
+    while (1) {
+        if (LeftTracer == 0 && RightTracer == 1) {
             printf("Left line tracer\n");
-            
-         
-        } else if (rightTracer == 0 && leftTracer == 1) {
+        } else if (RightTracer == 0 && LeftTracer == 1) {
             printf("Right line tracer\n");
-
-         
-        } else if (rightTracer == 0 && leftTracer == 0) {
+        } else if (RightTracer == 0 && LeftTracer == 0) {
             printf("Both line tracers\n");
-           
-            
-        
-        } else if (rightTracer == 1 && leftTracer == 1) {
+        } else if (RightTracer == 1 && LeftTracer == 1) {
              printf("None line tracers\n");
         }
     }
-   
 }
